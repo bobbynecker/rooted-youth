@@ -37,4 +37,24 @@
       if (element.hasAttribute(attribute)) element.setAttribute(attribute, repair(element.getAttribute(attribute)));
     });
   });
+  const footerDetails = document.querySelector('footer small');
+  if (footerDetails && !footerDetails.querySelector('.footer-policy-link')) {
+    const spacer = document.createTextNode(' | ');
+    const policyLink = document.createElement('a');
+    policyLink.className = 'footer-policy-link';
+    policyLink.href = 'privacy.html';
+    policyLink.textContent = 'Privacy Policy';
+    footerDetails.append(spacer, policyLink);
+  }
+
+  const prayerNotice = document.querySelector('.prayer-privacy-note');
+  if (prayerNotice && !prayerNotice.querySelector('.prayer-policy-link')) {
+    const policyLine = document.createElement('p');
+    const policyLink = document.createElement('a');
+    policyLine.className = 'prayer-policy-link';
+    policyLink.href = 'privacy.html';
+    policyLink.textContent = 'Read the Rooted Privacy Policy';
+    policyLine.append(policyLink);
+    prayerNotice.append(policyLine);
+  }
 })();
