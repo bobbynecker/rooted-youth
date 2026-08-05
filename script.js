@@ -27,3 +27,38 @@ document.querySelectorAll('.question-note-field').forEach((field) => {
   field.value = localStorage.getItem(key) || '';
   field.addEventListener('input', () => localStorage.setItem(key, field.value));
 });
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('service-worker.js'));
+}
+
+const installButton = document.querySelector('[data-install-app]');
+const installMessage = document.querySelector('[data-install-message]');
+let installPrompt;
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  installPrompt = event;
+});
+
+installButton?.addEventListener('click', async () => {
+  if (installPrompt) {
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    return;
+  }
+
+  const onAppleDevice = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  installMessage.textContent = onAppleDevice
+    ? 'In Safari, tap Share, then choose Add to Home Screen.'
+    : 'Open your browser menu and choose Install app or Add to Home screen.';
+});
+
+window.addEventListener('appinstalled', () => {
+  if (installButton) {
+    installButton.textContent = 'Rooted is installed';
+    installButton.disabled = true;
+  }
+  if (installMessage) installMessage.textContent = '';
+});
