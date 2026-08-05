@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="description" content="Send a private prayer request to Rooted." />
     <title>Private Prayer Request | Rooted</title>
@@ -21,63 +22,25 @@
         <p class="eyebrow">Shared only with Rooted leadership</p>
         <h1 id="prayer-title">Private Prayer<br /><em>Request</em></h1>
         <div class="tree-divider"><span></span><span class="prayer-cross" aria-hidden="true">✝</span><span></span></div>
-        <p class="prayer-request-intro">You may leave your name blank. Please include a phone number so Rooted leadership can follow up if needed. Your request will never be posted publicly.</p>
-        <p class="prayer-safety-note">This form is not monitored 24/7 and is not a crisis service. If you are thinking about hurting yourself or someone else, call or text <a href="tel:988">988</a> for the Suicide &amp; Crisis Lifeline, call <a href="tel:911">911</a> if there is immediate danger, and tell a trusted adult right away.</p>
-        <aside class="prayer-privacy-note"><strong>Privacy &amp; Safety</strong><p>Your request will be kept confidential and shared only with Rooted leadership. However, confidentiality cannot be guaranteed if we believe someone may be in immediate danger, at risk of harming themselves or another person, or if we learn of suspected abuse or neglect of a minor. In those circumstances, we may share information with a parent or guardian, emergency services, law enforcement, or other appropriate authorities to help keep people safe.</p></aside>
-        <form id="prayer-request-form" action="https://formspree.io/f/xdennvon" method="POST" novalidate>
+        <p class="prayer-request-intro">You may leave your name and phone number blank. Add a phone number only if you want a designated adult Rooted leader to follow up. Your request will never be posted publicly.</p>
+        <p class="prayer-safety-note" id="prayer-safety-text">This form is not monitored 24/7 and is not a crisis service. If you are thinking about hurting yourself or someone else, call or text <a href="tel:988">988</a> for the Suicide &amp; Crisis Lifeline, call <a href="tel:911">911</a> if there is immediate danger, and tell a trusted adult right away.</p>
+        <aside class="prayer-privacy-note" id="prayer-privacy-text"><strong>Privacy &amp; Safety</strong><p>Your request will be kept confidential and shared only with designated adult Rooted leaders. However, confidentiality cannot be guaranteed if we believe someone may be in immediate danger, at risk of harming themselves or another person, or if we learn of suspected abuse or neglect of a minor. In those circumstances, we may share information with a parent or guardian, emergency services, law enforcement, or other appropriate authorities to help keep people safe.</p></aside>
+        <form id="prayer-request-form" action="https://formspree.io/f/xdennvon" method="POST" accept-charset="UTF-8" autocomplete="off" aria-describedby="prayer-safety-text prayer-privacy-text">
           <input type="hidden" name="_subject" value="Rooted private prayer request" />
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="form-honeypot" />
           <label for="prayer-name">Name <span>(optional)</span></label>
-          <input id="prayer-name" name="name" type="text" autocomplete="name" />
-          <label for="prayer-contact">Phone number <span>(required for follow-up)</span></label>
-          <input id="prayer-contact" name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+          <input id="prayer-name" name="name" type="text" autocomplete="off" maxlength="100" />
+          <label for="prayer-contact">Phone number <span>(optional; only for follow-up)</span></label>
+          <input id="prayer-contact" name="phone" type="tel" autocomplete="off" inputmode="tel" maxlength="30" />
           <label for="prayer-message">Prayer request</label>
-          <textarea id="prayer-message" name="message" rows="7" required></textarea>
-          <label class="follow-up-consent" for="prayer-consent"><span>I understand Rooted leadership may contact me about this request.</span><input id="prayer-consent" name="follow_up_consent" type="checkbox" required /></label>
+          <textarea id="prayer-message" name="message" rows="7" autocomplete="off" maxlength="4000" required></textarea>
+          <label class="follow-up-consent" for="prayer-consent"><span>I have read the <a href="privacy.html" target="_blank" rel="noopener">privacy notice</a> and understand this request is processed by Formspree and shared with designated adult Rooted leaders.</span><input id="prayer-consent" name="privacy_consent" type="checkbox" value="yes" required /></label>
           <button class="button" type="submit">Send prayer request</button>
-          <p class="form-status">Your request is sent only to Rooted leadership.</p>
+          <p class="form-status" role="status" aria-live="polite">Your request is sent only to designated adult Rooted leaders.</p>
         </form>
       </section>
     </main>
     <script src="fix-encoding.js"></script>
-    <script>
-      const prayerForm = document.querySelector('#prayer-request-form');
-      const prayerStatus = document.querySelector('.form-status');
-      prayerForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const phoneField = document.querySelector('#prayer-contact');
-        const messageField = document.querySelector('#prayer-message');
-        const consentField = document.querySelector('#prayer-consent');
-        if (!phoneField.value.trim()) {
-          prayerStatus.textContent = 'Please enter a phone number so Rooted leadership can follow up.';
-          phoneField.focus();
-          return;
-        }
-        if (!messageField.value.trim()) {
-          prayerStatus.textContent = 'Please write a prayer request before submitting.';
-          messageField.focus();
-          return;
-        }
-        if (!consentField.checked) {
-          prayerStatus.textContent = 'Please confirm that Rooted leadership may contact you.';
-          consentField.focus();
-          return;
-        }
-        const submitButton = prayerForm.querySelector('button[type="submit"]');
-        prayerStatus.textContent = 'Sending your private prayer request…';
-        submitButton.disabled = true;
-        try {
-          const response = await fetch(prayerForm.action, {
-            method: 'POST',
-            body: new FormData(prayerForm),
-            headers: { Accept: 'application/json' }
-          });
-          if (!response.ok) throw new Error('Unable to send request');
-          window.location.assign('prayer-thank-you.html');
-        } catch (error) {
-          prayerStatus.textContent = 'Your request could not be sent right now. Please try again.';
-          submitButton.disabled = false;
-        }
-      });
-    </script>
+    <script src="prayer-form.js"></script>
   </body>
 </html>

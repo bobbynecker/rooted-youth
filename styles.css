@@ -75,3 +75,6 @@ footer .footer-verse{margin:4px auto 16px}
 
 /* Device-neutral crosses: CSS shapes avoid phone emoji colors. */
 .menu-button .cross-icon{position:relative;width:19px;height:25px;background:none!important;color:transparent!important;font-size:0!important;line-height:0!important}.menu-button .cross-icon::before,.menu-button .cross-icon::after,.prayer-cross::before,.prayer-cross::after{content:"";position:absolute;display:block;background:currentColor;border-radius:2px}.menu-button .cross-icon::before{top:0;left:calc(50% - .75px);width:1.5px;height:25px;background:var(--cream)}.menu-button .cross-icon::after{top:8px;left:0;width:19px;height:1.5px;background:var(--cream)}.prayer-cross{position:relative;display:inline-block;width:23px;height:29px;color:var(--gold);font-size:0!important;line-height:0}.prayer-cross::before{top:0;left:calc(50% - 1px);width:2px;height:29px}.prayer-cross::after{top:9px;left:1px;width:21px;height:2px}
+
+/* Bot trap: available to the form processor but never visible to visitors. */
+.form-honeypot{display:none!important}
