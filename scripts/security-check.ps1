@@ -76,6 +76,10 @@ foreach ($routePath in $sensitiveRoutes) {
   Assert-True ($serviceWorker.Contains("'$routePath'")) "Service worker does not recognize sensitive path: $routePath"
 }
 Assert-True ($serviceWorker -match "fetch\(event\.request, \{ cache: 'no-store' \}\)") 'Sensitive service-worker requests must use no-store.'
+$assetHandlerStart = $serviceWorker.LastIndexOf('event.respondWith(')
+$assetFetchPosition = $serviceWorker.IndexOf('fetch(event.request)', $assetHandlerStart)
+$assetCacheFallbackPosition = $serviceWorker.IndexOf('caches.match(event.request)', $assetHandlerStart)
+Assert-True ($assetHandlerStart -ge 0 -and $assetFetchPosition -gt $assetHandlerStart -and $assetCacheFallbackPosition -gt $assetFetchPosition) 'Static assets must use network-first caching so deployed updates are not held indefinitely.'
 
 $htmlFiles = Get-ChildItem -LiteralPath $script:RepositoryRoot -Filter '*.html' -File
 foreach ($htmlFile in $htmlFiles) {
