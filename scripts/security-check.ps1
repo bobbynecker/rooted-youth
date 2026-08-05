@@ -96,6 +96,7 @@ foreach ($htmlFile in $htmlFiles) {
 
 $prayerPage = Read-RepositoryFile 'prayer-request.html'
 $prayerThankYouPage = Read-RepositoryFile 'prayer-thank-you.html'
+$privacyPage = Read-RepositoryFile 'privacy.html'
 Assert-True ($prayerPage -match '<form[^>]+action="https://formspree\.io/') 'Prayer form must submit only over HTTPS to Formspree.'
 Assert-True ($prayerPage -match '<meta name="robots" content="noindex, nofollow, noarchive"') 'Prayer request page must include a noindex fallback.'
 Assert-True ($prayerThankYouPage -match '<meta name="robots" content="noindex, nofollow, noarchive"') 'Prayer thank-you page must include a noindex fallback.'
@@ -103,6 +104,7 @@ Assert-True ($prayerPage -match 'name="_gotcha"') 'Prayer form honeypot is missi
 Assert-True ($prayerPage -match 'name="privacy_consent"[^>]+required') 'Prayer form privacy consent is missing or optional.'
 Assert-True ($prayerPage -match 'name="message"[^>]+maxlength="4000"[^>]+required') 'Prayer message must be length-bounded and required.'
 Assert-True ($prayerPage -match '<script src="prayer-form\.js"></script>') 'Prayer form behavior must remain in an external CSP-compatible script.'
+Assert-True ($privacyPage.Contains('This site and prayer-request form are intended for people age 13 and older. If you are under 13, do not submit personal information; ask a parent or guardian to contact Rooted for you.')) 'Privacy policy must prohibit under-13 form submissions.'
 
 $prayerScript = Read-RepositoryFile 'prayer-form.js'
 Assert-True ($prayerScript -notmatch '(localStorage|sessionStorage|indexedDB)') 'Prayer form script must not persist request data in browser storage.'
