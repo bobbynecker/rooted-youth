@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="description" content="Send a private prayer request to Rooted." />
+    <title>Private Prayer Request | Rooted</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="prayer-request-page">
+    <a class="brand-mark" href="index.html#home" aria-label="Return to Rooted home">
+      <svg viewBox="0 0 80 95" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="3.5" d="M40 59c-1-13 1-25-1-39M39 34c-5-4-10-9-15-16M39 42c-8-2-15-6-22-12M40 49c8-3 15-8 21-15M41 37c5-5 9-12 11-19M39 28c-2-6-3-12-1-18"/><path stroke-width="2.35" d="M30 28c-3-1-8-4-11-8M30 30c-6 0-12-2-16-5M26 38c-5 1-10 1-14-1M49 29c5-2 9-6 12-10M50 38c6-1 11-4 15-8M48 44c5 1 11 0 15-2M42 24c4-3 7-7 8-12"/><path stroke-width="3.4" d="M40 59c-1 9-4 18-12 28M40 60c2 10 7 18 16 26M38 68c-7 2-14 6-21 13M42 68c8 2 14 7 22 13M35 76c-5 3-8 7-10 12M45 76c5 3 8 7 11 12"/><path stroke-width="2" d="M33 58c-2 7-7 13-14 18M47 58c3 7 8 12 15 17"/><path stroke-width="1.8" d="M27 18c-4-5-9-7-13-5 1 5 6 8 13 8Zm-8 12c-6-3-11-2-13 2 4 4 10 3 14-1Zm41-14c3-5 8-7 12-5-1 5-6 8-12 8Zm5 14c6-3 11-2 13 2-4 4-10 3-14-1ZM38 10c-2-5 0-9 4-11 3 4 2 9-4 11ZM13 41c-5-1-8 1-9 5 5 2 9-1 11-5Zm54 0c5-1 8 1 9 5-5 2-9-1 11-5Z"/></g></svg>
+    </a>
+
+    <main class="prayer-request-shell">
+      <section class="prayer-request-card" aria-labelledby="prayer-title">
+        <p class="eyebrow">Shared only with Rooted leadership</p>
+        <h1 id="prayer-title">Private Prayer<br /><em>Request</em></h1>
+        <div class="tree-divider"><span></span><span class="prayer-cross" aria-hidden="true">✝</span><span></span></div>
+        <p class="prayer-request-intro">You may leave your name blank. Please include a phone number so Rooted leadership can follow up if needed. Your request will never be posted publicly.</p>
+        <p class="prayer-safety-note">This form is not monitored 24/7 and is not a crisis service. If you are thinking about hurting yourself or someone else, call or text <a href="tel:988">988</a> for the Suicide &amp; Crisis Lifeline, call <a href="tel:911">911</a> if there is immediate danger, and tell a trusted adult right away.</p>
+        <aside class="prayer-privacy-note"><strong>Privacy &amp; Safety</strong><p>Your request will be kept confidential and shared only with Rooted leadership. However, confidentiality cannot be guaranteed if we believe someone may be in immediate danger, at risk of harming themselves or another person, or if we learn of suspected abuse or neglect of a minor. In those circumstances, we may share information with a parent or guardian, emergency services, law enforcement, or other appropriate authorities to help keep people safe.</p></aside>
+        <form id="prayer-request-form" action="https://formspree.io/f/xdennvon" method="POST" novalidate>
+          <input type="hidden" name="_subject" value="Rooted private prayer request" />
+          <label for="prayer-name">Name <span>(optional)</span></label>
+          <input id="prayer-name" name="name" type="text" autocomplete="name" />
+          <label for="prayer-contact">Phone number <span>(required for follow-up)</span></label>
+          <input id="prayer-contact" name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+          <label for="prayer-message">Prayer request</label>
+          <textarea id="prayer-message" name="message" rows="7" required></textarea>
+          <label class="follow-up-consent" for="prayer-consent"><span>I understand Rooted leadership may contact me about this request.</span><input id="prayer-consent" name="follow_up_consent" type="checkbox" required /></label>
+          <button class="button" type="submit">Send prayer request</button>
+          <p class="form-status">Your request is sent only to Rooted leadership.</p>
+        </form>
+      </section>
+    </main>
+    <script>
+      const prayerForm = document.querySelector('#prayer-request-form');
+      const prayerStatus = document.querySelector('.form-status');
+      prayerForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const phoneField = document.querySelector('#prayer-contact');
+        const messageField = document.querySelector('#prayer-message');
+        const consentField = document.querySelector('#prayer-consent');
+        if (!phoneField.value.trim()) {
+          prayerStatus.textContent = 'Please enter a phone number so Rooted leadership can follow up.';
+          phoneField.focus();
+          return;
+        }
+        if (!messageField.value.trim()) {
+          prayerStatus.textContent = 'Please write a prayer request before submitting.';
+          messageField.focus();
+          return;
+        }
+        if (!consentField.checked) {
+          prayerStatus.textContent = 'Please confirm that Rooted leadership may contact you.';
+          consentField.focus();
+          return;
+        }
+        const submitButton = prayerForm.querySelector('button[type="submit"]');
+        prayerStatus.textContent = 'Sending your private prayer request…';
+        submitButton.disabled = true;
+        try {
+          const response = await fetch(prayerForm.action, {
+            method: 'POST',
+            body: new FormData(prayerForm),
+            headers: { Accept: 'application/json' }
+          });
+          if (!response.ok) throw new Error('Unable to send request');
+          window.location.assign('prayer-thank-you.html');
+        } catch (error) {
+          prayerStatus.textContent = 'Your request could not be sent right now. Please try again.';
+          submitButton.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
