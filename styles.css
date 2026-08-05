@@ -78,3 +78,6 @@ footer .footer-verse{margin:4px auto 16px}
 
 /* Bot trap: available to the form processor but never visible to visitors. */
 .form-honeypot{display:none!important}
+
+/* Keep decorative tree watermarks from creating a horizontal page gutter. */
+html,body{max-width:100%;overflow-x:hidden}
