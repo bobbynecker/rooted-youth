@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rooted-app-v1';
+const CACHE_NAME = 'rooted-app-v2';
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -9,6 +9,7 @@ const APP_SHELL = [
   '/script.js',
   '/fix-encoding.js',
   '/favicon.svg',
+  '/app-icon.svg',
   '/manifest.webmanifest'
 ];
 
