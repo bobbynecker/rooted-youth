@@ -3,7 +3,7 @@
   "short_name": "Rooted",
   "description": "A high school community growing roots in the next generation.",
   "id": "/index.html",
-  "start_url": "/index.html#home",
+  "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
   "background_color": "#123b27",
