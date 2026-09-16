@@ -1,0 +1,58 @@
+.archive-study-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(43px, 5.2vw, 69px);
+  font-weight: 500;
+  line-height: 1;
+  margin: 20px 0;
+}
+.archive-page .section-content > .text-link {
+  margin: 0 0 24px;
+}
+.archive-study-notes {
+  max-width: 720px;
+  margin: 0 auto 48px;
+  font-size: 15px;
+  line-height: 1.9;
+}
+.archive-study-notes h2 {
+  margin: 34px 0 14px;
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.archive-study-notes blockquote {
+  margin: 0 0 36px;
+  padding: 4px 0 4px 22px;
+  border-left: 2px solid var(--gold);
+  font-style: italic;
+}
+.archive-study-notes cite {
+  font-size: 11px;
+  font-style: normal;
+  letter-spacing: .1em;
+}
+.archive-takeaway {
+  padding-top: 20px;
+  border-top: 1px solid #d7cbb9;
+}
+.archive-reflections {
+  padding-top: 30px;
+  border-top: 1px solid #d7cbb9;
+}
+.archive-reflections > div { min-width: 0; }
+.archive-reflections h2.card-kicker {
+  margin: 0 0 14px;
+  font-family: Lora, Georgia, serif;
+}
+.personal-study-notes .note-save-status,
+.personal-study-notes .notes-storage-help {
+  font-size: 11px;
+  line-height: 1.7;
+  color: #55715c;
+}
+.personal-study-notes .note-save-status { min-height: 1.7em; }
+@media (max-width: 720px) {
+  .archive-study-notes { font-size: 14px; }
+  .archive-study-notes blockquote { padding-left: 15px; }
+}
