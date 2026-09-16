@@ -1,8 +1,10 @@
-const CACHE_NAME = 'rooted-app-v8';
+const CACHE_NAME = 'rooted-app-v9';
 const APP_SHELL = [
   '/',
   '/index.html',
   '/archive.html',
+  '/growing-our-roots.html',
+  '/archive-study.css',
   '/privacy.html',
   '/styles.css',
   '/script.js',

@@ -2,7 +2,7 @@ const button = document.querySelector('.menu-button');
 const nav = document.querySelector('.site-nav');
 const links = document.querySelectorAll('.site-nav a');
 
-button.addEventListener('click', () => {
+button?.addEventListener('click', () => {
   const open = nav.classList.toggle('open');
   button.setAttribute('aria-expanded', open);
   button.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
@@ -20,12 +20,30 @@ const observer = new IntersectionObserver((entries) => {
   links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${active.target.id}`));
 }, { threshold: 0.35 });
 sections.forEach(section => observer.observe(section));
-document.querySelector('#year').textContent = new Date().getFullYear();
+const year = document.querySelector('#year');
+if (year) year.textContent = new Date().getFullYear();
 
 document.querySelectorAll('.question-note-field').forEach((field) => {
   const key = field.dataset.noteKey;
-  field.value = localStorage.getItem(key) || '';
-  field.addEventListener('input', () => localStorage.setItem(key, field.value));
+  const status = field.parentElement.querySelector('[data-note-status]');
+  const showStatus = (message) => { if (status) status.textContent = message; };
+  let canSave = true;
+  try {
+    field.value = localStorage.getItem(key) || '';
+    showStatus(field.value ? 'Saved in this browser.' : 'Your notes save automatically as you type.');
+  } catch {
+    canSave = false;
+    showStatus('Saving is unavailable in this browser. Copy your notes before leaving.');
+  }
+  field.addEventListener('input', () => {
+    if (!canSave) return;
+    try {
+      localStorage.setItem(key, field.value);
+      showStatus('Saved in this browser.');
+    } catch {
+      showStatus('Your latest changes could not be saved. Copy your notes before leaving.');
+    }
+  });
 });
 
 if ('serviceWorker' in navigator) {
